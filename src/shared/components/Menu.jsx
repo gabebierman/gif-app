@@ -4,9 +4,15 @@ import { NavLink } from "react-router-dom";
 const Menu = () => {
     return (
         <nav>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/search">Search</NavLink>
-            <NavLink to="/favorites">Favorites</NavLink>
+            <NavLink className="link" to="/login">
+                Login
+            </NavLink>
+            <NavLink className="link" to="/search">
+                Search
+            </NavLink>
+            <NavLink className="link" to="/favorites">
+                Favorites
+            </NavLink>
         </nav>
     );
 };

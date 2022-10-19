@@ -1,4 +1,4 @@
-import { useContext, createContext, useReducer } from "react";
+import { useContext, createContext, useReducer, useCallback } from "react";
 import {
     INTITAL_SEARCH_STATE,
     searchReducer,
@@ -9,13 +9,14 @@ import {
 const SearchContext = createContext(null);
 export const useSearchContext = () => useContext(SearchContext);
 
-export function SearchProvider() {
+export function SearchProvider(props) {
     const [search, dispatch] = useReducer(searchReducer, INTITAL_SEARCH_STATE);
 
-    const setSearch = (searchResults) =>
-        dispatch({ type: SET_SEARCH, payload: searchResults });
+    const setSearch = useCallback(
+        (searchResults) => dispatch({ type: SET_SEARCH, payload: searchResults })[dispatch]
+    );
 
-    const clearSearch = () => dispatch({ type: CLEAR_SEARCH });
+    const clearSearch = useCallback(() => dispatch({ type: CLEAR_SEARCH })[dispatch]);
 
     return (
         <SearchContext.Provider value={(search, setSearch, clearSearch)}>

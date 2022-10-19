@@ -1,4 +1,4 @@
-import { useContext, createContext, useReducer } from "react";
+import { useContext, createContext, useReducer, useCallback } from "react";
 import {
     CLEAR_USER,
     INTITAL_USER_STATE,
@@ -9,12 +9,14 @@ import {
 const UserContext = createContext(null);
 export const useSearchContext = () => useContext(UserContext);
 
-export function SearchProvider() {
+export function SearchProvider(props) {
     const [user, dispatch] = useReducer(userReducer, INTITAL_USER_STATE);
 
-    const setUser = (user) => dispatch({ type: SET_USER, payload: user });
+    const setUser = useCallback(
+        (user) => dispatch({ type: SET_USER, payload: user })[dispatch]
+    );
 
-    const clearUser = () => dispatch({ type: CLEAR_USER });
+    const clearUser = useContext(() => dispatch({ type: CLEAR_USER })[dispatch]);
 
     return (
         <UserContext.Provider value={(user, setUser, clearUser)}>
