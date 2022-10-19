@@ -7,9 +7,9 @@ import {
 } from "../reducers/userReducer";
 
 const UserContext = createContext(null);
-export const useSearchContext = () => useContext(UserContext);
+export const useUserContext = () => useContext(UserContext);
 
-export function SearchProvider(props) {
+export function UserProvider(props) {
     const [user, dispatch] = useReducer(userReducer, INTITAL_USER_STATE);
 
     const setUser = useCallback(

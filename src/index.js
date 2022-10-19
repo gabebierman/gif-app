@@ -3,13 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { UserProvider, FavoritesProvider, SearchProvider } from "./shared/context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UserProvider, FavoritesProvider, SearchProvider } from "./shared/context/index";
 
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             refetchOnWindowFocus: false,
+            refetchOnMount: false,
         },
     },
 });

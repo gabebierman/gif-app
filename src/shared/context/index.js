@@ -1,6 +1,6 @@
-// export * from "./FavoritesContext";
-// export * from "./SearchContext";
-// export * from "./UserContext";
+export * from "./FavoritesContext";
+export * from "./SearchContext";
+export * from "./UserContext";
 
 // export function CombinedProvider(props) {
 //     return (
