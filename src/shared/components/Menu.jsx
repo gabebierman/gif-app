@@ -1,20 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const Menu = () => {
+export const Menu = () => {
     return (
         <nav>
             <NavLink className="link" to="/login">
-                Login
+                "Login"
             </NavLink>
             <NavLink className="link" to="/search">
-                Search
+                "Search"
             </NavLink>
             <NavLink className="link" to="/favorites">
-                Favorites
+                "Favorites"
             </NavLink>
         </nav>
     );
 };
-
-export default Menu;
