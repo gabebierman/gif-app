@@ -1,25 +1,35 @@
-import { useContext, createContext, useReducer, useCallback } from "react";
+import React, { useReducer, useContext, createContext, useCallback } from "react";
 import {
-    INTITAL_SEARCH_STATE,
+    CLEAR_SEARCH,
+    INITIAL_SEARCH_STATE,
     searchReducer,
     SET_SEARCH,
-    CLEAR_SEARCH,
 } from "../reducers/searchReducer";
 
 const SearchContext = createContext(null);
-export const useSearchContext = () => useContext(SearchContext);
+
+export function useSearchContext() {
+    return useContext(SearchContext);
+}
 
 export function SearchProvider(props) {
-    const [search, dispatch] = useReducer(searchReducer, INTITAL_SEARCH_STATE);
+    const [searchResults, dispatch] = useReducer(searchReducer, INITIAL_SEARCH_STATE);
 
-    const setSearch = useCallback(
-        (searchResults) => dispatch({ type: SET_SEARCH, payload: searchResults })[dispatch]
+    const setSearchResults = useCallback(
+        (searchResults) => {
+            dispatch({ type: SET_SEARCH, payload: searchResults });
+        },
+        [dispatch]
     );
 
-    const clearSearch = useCallback(() => dispatch({ type: CLEAR_SEARCH })[dispatch]);
+    const clearSearchResults = useCallback(() => {
+        dispatch({ type: CLEAR_SEARCH });
+    }, [dispatch]);
 
     return (
-        <SearchContext.Provider value={(search, setSearch, clearSearch)}>
+        <SearchContext.Provider
+            value={{ searchResults, clearSearchResults, setSearchResults }}
+        >
             {props.children}
         </SearchContext.Provider>
     );
