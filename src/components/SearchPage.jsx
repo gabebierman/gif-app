@@ -38,7 +38,11 @@ const SearchPage = () => {
                 Search
             </button>
             {error && "Uh oh"}
-            {!error && <GifDisplay></GifDisplay>}
+            {searchResults.length === 0 && "Dave's not here , man"}
+            {searchResults.length !== 0 &&
+                searchResults.map((e) => (
+                    <GifDisplay key={e.gif_id} gif_id={e.gif_id} title={e.title} url={e.url} />
+                ))}
         </div>
     );
 };
