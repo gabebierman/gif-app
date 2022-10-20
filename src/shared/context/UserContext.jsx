@@ -10,7 +10,7 @@ const UserContext = createContext(null);
 export const useUserContext = () => useContext(UserContext);
 
 export function UserProvider(props) {
-    const [user, dispatch] = useReducer(userReducer, { username: "gabe" });
+    const [user, dispatch] = useReducer(userReducer);
 
     const setUser = useCallback(
         (user) => dispatch({ type: SET_USER, payload: user }),
