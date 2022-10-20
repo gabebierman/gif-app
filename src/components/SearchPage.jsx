@@ -3,12 +3,14 @@ import getGifs from "../shared/functions/getGifs";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchContext } from "../shared/context/SearchContext";
 import GifDisplay from "../shared/components/GifDisplay";
+import { useFavoritesContext } from "../shared/context/FavoritesContext";
 
 const SearchPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [rating, setRating] = useState("g");
     const [url, setUrl] = useState(null);
     const { searchResults, setSearchResults } = useSearchContext();
+    const { favorite, addFavorite, removeFavorite } = useFavoritesContext();
     const { error } = useQuery(["getGifs", url], () => getGifs(url), {
         onSuccess: (data) => setSearchResults(data),
         enabled: !!url,
@@ -41,7 +43,13 @@ const SearchPage = () => {
             {searchResults.length === 0 && "Dave's not here , man"}
             {searchResults.length !== 0 &&
                 searchResults.map((e) => (
-                    <GifDisplay key={e.gif_id} gif_id={e.gif_id} title={e.title} url={e.url} />
+                    <GifDisplay
+                        key={e.gif_id}
+                        {...e}
+                        isFavorite={favorite.some((fave) => fave.gif_id === e.gif_id)}
+                        addFavorite={addFavorite}
+                        removeFavorite={removeFavorite}
+                    />
                 ))}
         </div>
     );

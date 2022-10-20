@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { useFavoritesContext } from "../context/FavoritesContext";
 
-const GifDisplay = ({ gif_id, title, url }) => {
+const GifDisplay = ({ gif_id, title, url, addFavorite, removeFavorite, isFavorite }) => {
     return (
         <>
             <div key={gif_id}>
                 <h3>{title}</h3>
                 <img src={url} alt={title}></img>
-                {/* {gif_id} */}
+                {isFavorite && (
+                    <button onClick={() => removeFavorite(gif_id)}>Remove Favorite</button>
+                )}
+                {!isFavorite && (
+                    <button onClick={() => addFavorite({ title, url, gif_id })}>
+                        Add Favorite
+                    </button>
+                )}
             </div>
-            <button>Add Favorite</button>
         </>
     );
 };
