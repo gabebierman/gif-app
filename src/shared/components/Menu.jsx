@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useUserContext } from "../context/UserContext";
+import { clearFavorite, clearSearch, clearUser } from "../redux/store";
+import { connect } from "react-redux";
 
-const Menu = () => {
-    const { user, clearUser } = useUserContext();
+const Menu = (user, clearState) => {
     return (
         <nav>
             {!user && (
@@ -19,7 +19,7 @@ const Menu = () => {
                     <NavLink className="link" to="/favorites">
                         Favorites
                     </NavLink>
-                    <NavLink className="link" to="/login" onClick={clearUser}>
+                    <NavLink className="link" to="/login" onClick={clearState}>
                         Logout
                     </NavLink>
                 </>
@@ -28,4 +28,16 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        clearState: () => {
+            dispatch(clearUser());
+            dispatch(clearFavorite());
+            dispatch(clearSearch());
+        },
+    };
+};
+
+const mapStateToProps = (state) => ({ user: state.user });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
