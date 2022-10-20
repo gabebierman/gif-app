@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Menu } from "./shared/components/Menu";
+import Menu from "./shared/components/Menu";
 import LoginPage from "./components/LoginPage";
 import FavoritesPage from "./components/FavoritesPage";
 import SearchPage from "./components/SearchPage";
@@ -13,15 +13,15 @@ function App() {
             <Routes>
                 <Route
                     path="/login"
-                    element={<PublicRoute componenet={<LoginPage />} />}
+                    element={<PublicRoute component={<LoginPage />} />}
                 ></Route>
                 <Route
                     path="/search"
-                    element={<PrivateRoute componenet={<SearchPage />} />}
+                    element={<PrivateRoute component={<SearchPage />} />}
                 ></Route>
                 <Route
                     path="/favorites"
-                    element={<PrivateRoute componenet={<FavoritesPage />} />}
+                    element={<PrivateRoute component={<FavoritesPage />} />}
                 ></Route>
                 <Route path="*" element={<Navigate to="/search" />}></Route>
             </Routes>

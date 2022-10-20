@@ -10,9 +10,9 @@ const AuthRoute = ({ requiresUser, component }) => {
         return (!requiresUser && !user) || (requiresUser && user);
     }, [requiresUser, user]);
 
-    // if (authorized) {
-    return <>{component}</>;
-    // }
+    if (authorized) {
+        return <>{component}</>;
+    }
 
     return <Navigate to={redirectTo} />;
 };
