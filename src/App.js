@@ -4,15 +4,25 @@ import { Menu } from "./shared/components/Menu";
 import LoginPage from "./components/LoginPage";
 import FavoritesPage from "./components/FavoritesPage";
 import SearchPage from "./components/SearchPage";
+import { PrivateRoute, PublicRoute } from "./shared/components/ProtectedRoute";
 
 function App() {
     return (
         <Router>
             <Menu />
             <Routes>
-                <Route path="/login" element={<LoginPage />}></Route>
-                <Route path="/search" element={<SearchPage />}></Route>
-                <Route path="/favorites" element={<FavoritesPage />}></Route>
+                <Route
+                    path="/login"
+                    element={<PublicRoute componenet={<LoginPage />} />}
+                ></Route>
+                <Route
+                    path="/search"
+                    element={<PrivateRoute componenet={<SearchPage />} />}
+                ></Route>
+                <Route
+                    path="/favorites"
+                    element={<PrivateRoute componenet={<FavoritesPage />} />}
+                ></Route>
                 <Route path="*" element={<Navigate to="/search" />}></Route>
             </Routes>
         </Router>

@@ -19,7 +19,7 @@ export function UserProvider(props) {
     const clearUser = useContext(() => dispatch({ type: CLEAR_USER })[dispatch]);
 
     return (
-        <UserContext.Provider value={(user, setUser, clearUser)}>
+        <UserContext.Provider value={{ user, setUser, clearUser }}>
             {props.children}
         </UserContext.Provider>
     );

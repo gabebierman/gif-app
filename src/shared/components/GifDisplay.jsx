@@ -1,17 +1,16 @@
 import React from "react";
-import getGifs from "../functions/getGifs";
-import { SearchProvider, useSearchContext } from "../context/SearchContext";
 
-function GifDisplay({ gif_id, title, url }) {
+const GifDisplay = ({ gif_id, title, url }) => {
     return (
         <>
             <div key={gif_id}>
-                {title}
+                <h3>{title}</h3>
                 <img src={url} alt={title}></img>
-                {gif_id}
+                {/* {gif_id} */}
             </div>
+            <button>Add Favorite</button>
         </>
     );
-}
+};
 
 export default GifDisplay;
