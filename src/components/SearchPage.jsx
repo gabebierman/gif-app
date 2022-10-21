@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import getGifs from "../shared/functions/getGifs";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchContext } from "../shared/context/SearchContext";
 import GifDisplay from "../shared/components/GifDisplay";
-import { useFavoritesContext } from "../shared/context/FavoritesContext";
+import { setSearch, removeFavorite } from "../shared/redux/store";
+import { addFavorite } from "../shared/redux/store";
+import { connect } from "react-redux";
 
-const SearchPage = () => {
+const SearchPage = ({ searchResults, setSearch, removeFavorite, addFavorite, favorites }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [rating, setRating] = useState("g");
     const [url, setUrl] = useState(null);
-    const { searchResults, setSearchResults } = useSearchContext();
-    const { favorite, addFavorite, removeFavorite } = useFavoritesContext();
     const { error } = useQuery(["getGifs", url], () => getGifs(url), {
-        onSuccess: (data) => setSearchResults(data),
+        onSuccess: (data) => setSearch(data),
         enabled: !!url,
     });
     return (
@@ -46,7 +45,7 @@ const SearchPage = () => {
                     <GifDisplay
                         key={e.gif_id}
                         {...e}
-                        isFavorite={favorite.some((fave) => fave.gif_id === e.gif_id)}
+                        isFavorite={favorites.some((fave) => fave.gif_id === e.gif_id)}
                         addFavorite={addFavorite}
                         removeFavorite={removeFavorite}
                     />
@@ -55,4 +54,15 @@ const SearchPage = () => {
     );
 };
 
-export default SearchPage;
+const mapDispatchToProps = (dispatch) => ({
+    removeFavorite: (gif_id) => dispatch(removeFavorite(gif_id)),
+    addFavorite: (gif) => dispatch(addFavorite(gif)),
+    setSearch: (results) => dispatch(setSearch(results)),
+});
+
+const mapStateToProps = (state) => ({
+    favorites: state.favorites,
+    searchResults: state.search,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

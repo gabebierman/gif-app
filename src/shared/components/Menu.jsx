@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { clearFavorite, clearSearch, clearUser } from "../redux/store";
+import { clearFavorites, clearSearch, clearUser } from "../redux/store";
 import { connect } from "react-redux";
 
 const Menu = (user, clearState) => {
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         clearState: () => {
             dispatch(clearUser());
-            dispatch(clearFavorite());
+            dispatch(clearFavorites());
             dispatch(clearSearch());
         },
     };

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useUserContext } from "../shared/context/UserContext";
+import { connect } from "react-redux";
+import { setUser } from "../shared/redux/store";
 
-const LoginPage = () => {
+const LoginPage = ({ login }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const { setUser } = useUserContext();
-
     return (
         <>
             <label htmlFor="username">Username</label>
@@ -25,7 +24,7 @@ const LoginPage = () => {
                 disabled={username.length < 3 || password.length < 3}
                 onClick={() => {
                     if (username.length > 1 && password.length > 1) {
-                        setUser({ username });
+                        login({ username });
                     }
                 }}
             >
@@ -35,4 +34,10 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+const mapDispatchToProps = (dispatch) => ({
+    login: (user) => dispatch(setUser(user)),
+});
+
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -1,14 +1,14 @@
 import React from "react";
-import { useFavoritesContext } from "../shared/context/FavoritesContext";
 import GifDisplay from "../shared/components/GifDisplay";
+import { connect } from "react-redux";
+import { removeFavorite } from "../shared/redux/store";
 
-const FavoritesPage = () => {
-    const { favorite, removeFavorite } = useFavoritesContext();
+const FavoritesPage = ({ favorites, removeFavorite }) => {
     return (
         <>
-            {favorite.length < 1 && "Try adding some favorites!"}
-            {favorite.length !== 0 &&
-                favorite.map((e) => (
+            {favorites.length < 1 && "Try adding some favorites!"}
+            {favorites.length !== 0 &&
+                favorites.map((e) => (
                     <GifDisplay
                         key={e.gif_id}
                         {...e}
@@ -20,4 +20,13 @@ const FavoritesPage = () => {
     );
 };
 
-export default FavoritesPage;
+const mapDispatchToProps = (dispatch) => ({
+    removeFavorite: (gif_id) => dispatch(removeFavorite(gif_id)),
+});
+
+const mapStateToProps = (state) => ({
+    favorites: state.favorites,
+    user: state.user,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage);

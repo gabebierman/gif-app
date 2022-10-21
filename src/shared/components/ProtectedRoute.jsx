@@ -1,9 +1,8 @@
 import React, { useMemo } from "react";
 import { Navigate } from "react-router-dom";
-import { useUserContext } from "../context/UserContext";
+import { connect } from "react-redux";
 
-const AuthRoute = ({ requiresUser, component }) => {
-    const { user } = useUserContext();
+const AuthRoute = ({ requiresUser, component, user }) => {
     const redirectTo = useMemo(() => (requiresUser ? "/login" : "/search"), [requiresUser]);
 
     const authorized = useMemo(() => {
@@ -17,10 +16,16 @@ const AuthRoute = ({ requiresUser, component }) => {
     return <Navigate to={redirectTo} />;
 };
 
+const mapDispatchToProps = () => ({});
+
+const mapStateToProps = (state) => ({ user: state.user });
+
+const ConnectedAuthRoute = connect(mapStateToProps, mapDispatchToProps)(AuthRoute);
+
 export const PrivateRoute = ({ component }) => {
-    return <AuthRoute requiresUser={true} component={component} />;
+    return <ConnectedAuthRoute requiresUser={true} component={component} />;
 };
 
 export const PublicRoute = ({ component }) => {
-    return <AuthRoute requiresUser={false} component={component} />;
+    return <ConnectedAuthRoute requiresUser={false} component={component} />;
 };

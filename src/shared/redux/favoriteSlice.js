@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const favoriteSlice = createSlice({
-    name: "favorite",
+export const favoritesSlice = createSlice({
+    name: "favorites",
     initialState: [],
     reducers: {
         addFavorite: (state, action) => [...state, action.payload],
-        removeFavorite: (state, action) => state.filter((e) => e.gif_id !== action.payload),
-        clearFavorite: () => [],
+        removeFavorite: (state, action) =>
+            state.filter((val) => val.gif_id !== action.payload),
+        clearFavorites: () => [],
     },
 });
 
-export const { addFavorite, removeFavorite, clearFavorite } = favoriteSlice.actions;
-export default favoriteSlice.reducer;
+export const { addFavorite, removeFavorite, clearFavorites } = favoritesSlice.actions;
+
+export default favoritesSlice.reducer;
