@@ -1,8 +1,11 @@
 import React, { useMemo } from "react";
 import { Navigate } from "react-router-dom";
+import FavoritesPage from "../../components/FavoritesPage";
+import LoginPage from "../../components/LoginPage";
+import SearchPage from "../../components/SearchPage";
 import { useUserContext } from "../context/UserContext";
 
-const withAuthentication = (requiresUser) => {
+const withAuthentication = (WrappedComponent, requiresUser) => {
     return (props) => {
         const { user } = useUserContext();
         const redirectTo = useMemo(
@@ -15,13 +18,13 @@ const withAuthentication = (requiresUser) => {
         }, [requiresUser, user]);
 
         if (authorized) {
-            return <>{props.component}</>;
+            return <WrappedComponent {...props} />;
         }
 
         return <Navigate to={redirectTo} />;
     };
 };
 
-export const PrivateRoute = withAuthentication(true);
-
-export const PublicRoute = withAuthentication(false);
+export const FavoritesPageWithAuth = withAuthentication(FavoritesPage, true);
+export const SearchPageWithAuth = withAuthentication(SearchPage, true);
+export const LoginPageWithAuth = withAuthentication(LoginPage, false);
