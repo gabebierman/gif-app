@@ -1,4 +1,4 @@
-import { ThemeProvider as ThemeWrapper } from "@emotion/css";
+import { ThemeProvider as ThemeWrapper } from "@emotion/react";
 import theme from "./themes";
 
 export const ThemeProvider = (props) => {
