@@ -30,7 +30,6 @@ const SearchPage = () => {
                 <option value="r">R</option>
             </select>
             <button
-                variant="secondary"
                 onClick={(e) => {
                     if (searchTerm) {
                         setUrl(`&q=${searchTerm}&rating=${rating}`);
