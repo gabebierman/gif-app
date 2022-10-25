@@ -6,6 +6,8 @@ import { setSearch, removeFavorite } from "../shared/redux/store";
 import { addFavorite } from "../shared/redux/store";
 import { connect } from "react-redux";
 import { Button } from "../shared/styled/Button";
+import { FlexContainer } from "../shared/styled/FlexContainer";
+import { Form } from "../shared/styled/Form";
 
 const SearchPage = ({ searchResults, setSearch, removeFavorite, addFavorite, favorites }) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -17,40 +19,44 @@ const SearchPage = ({ searchResults, setSearch, removeFavorite, addFavorite, fav
     });
     return (
         <div>
-            <input
-                placeholder="Search Term"
-                id="search-term"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <select value={rating} onChange={(e) => setRating(e.target.value)}>
-                <option value="g">G</option>
-                <option value="pg">PG</option>
-                <option value="pg-13">PG-13</option>
-                <option value="r">R</option>
-            </select>
-            <Button
-                variant="secondary"
-                onClick={(e) => {
-                    if (searchTerm) {
-                        setUrl(`&q=${searchTerm}&rating=${rating}`);
-                    }
-                }}
-            >
-                Search
-            </Button>
-            {error && "Uh oh"}
-            {searchResults.length === 0 && "Dave's not here , man"}
-            {searchResults.length !== 0 &&
-                searchResults.map((e) => (
-                    <GifDisplay
-                        key={e.gif_id}
-                        {...e}
-                        isFavorite={favorites.some((fave) => fave.gif_id === e.gif_id)}
-                        addFavorite={addFavorite}
-                        removeFavorite={removeFavorite}
-                    />
-                ))}
+            <Form>
+                <input
+                    placeholder="Search Term"
+                    id="search-term"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                    <option value="g">G</option>
+                    <option value="pg">PG</option>
+                    <option value="pg-13">PG-13</option>
+                    <option value="r">R</option>
+                </select>
+                <Button
+                    variant="secondary"
+                    onClick={(e) => {
+                        if (searchTerm) {
+                            setUrl(`&q=${searchTerm}&rating=${rating}`);
+                        }
+                    }}
+                >
+                    Search
+                </Button>
+            </Form>
+            <FlexContainer>
+                {error && "Uh oh"}
+                {searchResults.length === 0 && "Dave's not here , man"}
+                {searchResults.length !== 0 &&
+                    searchResults.map((e) => (
+                        <GifDisplay
+                            key={e.gif_id}
+                            {...e}
+                            isFavorite={favorites.some((fave) => fave.gif_id === e.gif_id)}
+                            addFavorite={addFavorite}
+                            removeFavorite={removeFavorite}
+                        />
+                    ))}
+            </FlexContainer>
         </div>
     );
 };

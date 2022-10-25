@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { clearFavorites, clearSearch, clearUser } from "../redux/store";
+import { clearFavorites } from "../redux/favoriteSlice";
+import { clearUser } from "../redux/userSlice";
+import { clearSearch } from "../redux/searchSlice";
 import { connect } from "react-redux";
 
-const Menu = (user, clearState) => {
+const Menu = ({ user, clearFavorites, clearSearch, clearUser }) => {
     return (
         <nav>
             {!user && (
@@ -19,7 +21,15 @@ const Menu = (user, clearState) => {
                     <NavLink className="link" to="/favorites">
                         Favorites
                     </NavLink>
-                    <NavLink className="link" to="/login" onClick={clearState}>
+                    <NavLink
+                        className="link"
+                        to="/login"
+                        onClick={() => {
+                            clearUser();
+                            clearSearch();
+                            clearFavorites();
+                        }}
+                    >
                         Logout
                     </NavLink>
                 </>

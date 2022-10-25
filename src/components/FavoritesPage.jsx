@@ -2,10 +2,11 @@ import React from "react";
 import GifDisplay from "../shared/components/GifDisplay";
 import { connect } from "react-redux";
 import { removeFavorite } from "../shared/redux/store";
+import { FlexContainer } from "../shared/styled/FlexContainer";
 
 const FavoritesPage = ({ favorites, removeFavorite }) => {
     return (
-        <>
+        <FlexContainer>
             {favorites.length < 1 && "Try adding some favorites!"}
             {favorites.length !== 0 &&
                 favorites.map((e) => (
@@ -16,7 +17,7 @@ const FavoritesPage = ({ favorites, removeFavorite }) => {
                         removeFavorite={removeFavorite}
                     />
                 ))}
-        </>
+        </FlexContainer>
     );
 };
 
