@@ -5,6 +5,7 @@ import GifDisplay from "../shared/components/GifDisplay";
 import { setSearch, removeFavorite } from "../shared/redux/store";
 import { addFavorite } from "../shared/redux/store";
 import { connect } from "react-redux";
+import { Button } from "../shared/styled/Button";
 
 const SearchPage = ({ searchResults, setSearch, removeFavorite, addFavorite, favorites }) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +29,7 @@ const SearchPage = ({ searchResults, setSearch, removeFavorite, addFavorite, fav
                 <option value="pg-13">PG-13</option>
                 <option value="r">R</option>
             </select>
-            <button
+            <Button
                 variant="secondary"
                 onClick={(e) => {
                     if (searchTerm) {
@@ -37,7 +38,7 @@ const SearchPage = ({ searchResults, setSearch, removeFavorite, addFavorite, fav
                 }}
             >
                 Search
-            </button>
+            </Button>
             {error && "Uh oh"}
             {searchResults.length === 0 && "Dave's not here , man"}
             {searchResults.length !== 0 &&

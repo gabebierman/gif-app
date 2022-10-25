@@ -4,9 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import store from "./shared/redux/store";
+import { ThemeProvider } from "./shared/themes/ThemeProvider";
 import { Provider } from "react-redux";
-import ThemeWrapper, { ThemeProvider } from "./shared/themes/ThemeProvider";
+import store from "./shared/redux/store";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -18,13 +18,15 @@ const queryClient = new QueryClient({
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-            <StateProvider>
-                <App />
-            </StateProvider>
-        </QueryClientProvider>
-    </ThemeProvider>
+    <React.StrictMode>
+        <ThemeProvider>
+            <Provider store={store}>
+                <QueryClientProvider client={queryClient}>
+                    <App />
+                </QueryClientProvider>
+            </Provider>
+        </ThemeProvider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

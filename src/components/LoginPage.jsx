@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setUser } from "../shared/redux/store";
+import { Button } from "../shared/styled/Button";
 
 const LoginPage = ({ login }) => {
     const [username, setUsername] = useState("");
@@ -20,7 +21,7 @@ const LoginPage = ({ login }) => {
                 value={password}
                 type="password"
             ></input>
-            <button
+            <Button
                 disabled={username.length < 3 || password.length < 3}
                 onClick={() => {
                     if (username.length > 1 && password.length > 1) {
@@ -29,7 +30,7 @@ const LoginPage = ({ login }) => {
                 }}
             >
                 Login
-            </button>
+            </Button>
         </>
     );
 };

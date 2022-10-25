@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "../styled/Button";
 
 const GifDisplay = ({ gif_id, title, url, addFavorite, removeFavorite, isFavorite }) => {
     return (
@@ -7,12 +8,12 @@ const GifDisplay = ({ gif_id, title, url, addFavorite, removeFavorite, isFavorit
                 <h3>{title}</h3>
                 <img src={url} alt={title}></img>
                 {isFavorite && (
-                    <button onClick={() => removeFavorite(gif_id)}>Remove Favorite</button>
+                    <Button onClick={() => removeFavorite(gif_id)}>Remove Favorite</Button>
                 )}
                 {!isFavorite && (
-                    <button onClick={() => addFavorite({ title, url, gif_id })}>
+                    <Button onClick={() => addFavorite({ title, url, gif_id })}>
                         Add Favorite
-                    </button>
+                    </Button>
                 )}
             </div>
         </>
