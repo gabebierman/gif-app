@@ -25,4 +25,6 @@ pool.getConnection((err, connection) => {
     return;
 });
 
-export default query = util.promisify(pool.query).bind(pool);
+const query = util.promisify(pool.query).bind(pool);
+
+export default query;

@@ -5,13 +5,13 @@ const router = express.Router();
 
 router.put("/register", validateData, async (req, res) => {
     const { username, password } = req.body;
-    const resObj = register(username, password);
+    const resObj = await register(username, password);
     return res.send(resObj);
 });
 
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
-    const resObj = login(username, password);
+    const resObj = await login(username, password);
     return res.send(resObj);
 });
 
