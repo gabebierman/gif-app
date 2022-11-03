@@ -1,11 +1,31 @@
 import React, { useState } from "react";
 import { useUserContext } from "../shared/context/UserContext";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useFavoritesContext } from "../shared/context/FavoritesContext";
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const { setUser } = useUserContext();
-
+    const { setFavorites } = useFavoritesContext();
+    const {
+        data: resObject,
+        error: reqError,
+        mutate: login,
+    } = useMutation({
+        mutationFn: async (user) => {
+            const { data } = await axios.post("/api/users/login", user);
+            return data;
+        },
+        onSuccess: (res) => {
+            if (res.success) {
+                setUser(res.data.user);
+                setFavorites(res.data.favorites);
+            }
+            return res;
+        },
+    });
     return (
         <>
             <label htmlFor="username">Username</label>
@@ -22,15 +42,17 @@ const LoginPage = () => {
                 type="password"
             ></input>
             <button
-                disabled={username.length < 3 || password.length < 3}
+                disabled={username.length < 3 || password.length < 7}
                 onClick={() => {
                     if (username.length > 1 && password.length > 1) {
-                        setUser({ username });
+                        login({ username, password });
                     }
                 }}
             >
                 Login
             </button>
+            {resObject && resObject.error}
+            {reqError && <>Something went wrong , please try again later</>}
         </>
     );
 };

@@ -1,6 +1,7 @@
 export const ADD_FAVORITE = "Add Favorite";
 export const REMOVE_FAVORITE = "Remove Favorite";
 export const CLEAR_FAVORITES = "Clear Favorites";
+export const SET_FAVORITES = "Set Favorites";
 
 export const INITIAL_FAVORITES_STATE = [];
 
@@ -10,6 +11,8 @@ export function favoritesReducer(state, action) {
             return [...state, action.payload];
         case REMOVE_FAVORITE:
             return state.filter((val) => val.gif_id !== action.payload);
+        case SET_FAVORITES:
+            return action.payload;
         case CLEAR_FAVORITES:
             return INITIAL_FAVORITES_STATE;
         default:
