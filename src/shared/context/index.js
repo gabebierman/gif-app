@@ -1,13 +1,13 @@
-export * from "./FavoritesContext";
-export * from "./SearchContext";
-export * from "./UserContext";
+export { FavoritesProvider } from "./FavoritesContext";
+export { SearchProvider } from "./SearchContext";
+export { UserProvider } from "./UserContext";
 
-// export function CombinedProvider(props) {
-//     return (
-//         <UserProvider>
-//             <FavoritesProvider>
-//                 <SearchProvider>{props.children}</SearchProvider>
-//             </FavoritesProvider>
-//         </UserProvider>
-//     );
-// }
+export function CombinedProvider(props) {
+    return (
+        <UserProvider>
+            <FavoritesProvider>
+                <SearchProvider>{props.children}</SearchProvider>
+            </FavoritesProvider>
+        </UserProvider>
+    );
+}
