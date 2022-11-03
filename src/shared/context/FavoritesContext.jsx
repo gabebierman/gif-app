@@ -9,6 +9,7 @@ import {
 } from "../reducers/favoritesReducer";
 import { useUserContext } from "./UserContext";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 const FavoritesContext = createContext(null);
 
@@ -17,14 +18,42 @@ export const useFavoritesContext = () => {
 };
 
 export function FavoritesProvider(props) {
-    // pull in the current users ID from UserContext
-    const { userID } = useUserContext();
-    // buil mutations and pull out the mutat funciton
-    const {} = useMutation;
-    // call the mutate function addFavorite or removeFavorite
-    //on error log the error to the console
-    // on success dispatch the appropriate funciton
-    const [favorite, dispatch] = useReducer(favoritesReducer, INITIAL_FAVORITES_STATE);
+    const { user } = useUserContext();
+    //! Build mutations and pull out the mutate function
+    const { mutate: addFavorite } = useMutation({
+        mutationFn: async (gif) => {
+            const { data } = await axios.put("/api/favorites/add", {
+                ...gif,
+                user_id: user?.id,
+            });
+            return data;
+        },
+        onSuccess: (res) => {
+            if (res.success) {
+                addToState(res.data);
+            } else {
+                console.log(res.error);
+            }
+        },
+        onError: (err) => console.error(err),
+    });
+
+    const { mutate: removeFavorite } = useMutation({
+        mutationFn: async (gif_id) => {
+            const { data } = await axios.delete(`/api/favorites/delete/${gif_id}/${user?.id}`);
+            return data;
+        },
+        onSuccess: (res) => {
+            if (res.success) {
+                removeFromState(res.data);
+            } else {
+                console.log(res.error);
+            }
+        },
+        onError: (err) => console.error(err),
+    });
+
+    const [favorites, dispatch] = useReducer(favoritesReducer, INITIAL_FAVORITES_STATE);
 
     const setFavorites = useCallback(
         (favorites) => {
@@ -33,14 +62,14 @@ export function FavoritesProvider(props) {
         [dispatch]
     );
 
-    const addFavorite = useCallback(
+    const addToState = useCallback(
         (gif) => {
             dispatch({ type: ADD_FAVORITE, payload: gif });
         },
         [dispatch]
     );
 
-    const removeFavorite = useCallback(
+    const removeFromState = useCallback(
         (gif_id) => {
             dispatch({ type: REMOVE_FAVORITE, payload: gif_id });
         },

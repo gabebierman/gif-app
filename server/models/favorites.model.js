@@ -21,7 +21,7 @@ export async function removeFavorite(user_id, gif_id) {
             user_id,
             gif_id,
         ]);
-        return { data: "successfully removed", success: true };
+        return { data: gif_id, success: true };
     } catch (err) {
         console.error(err);
         return { error: "Something went wrong 🤷‍♂️", success: false };
