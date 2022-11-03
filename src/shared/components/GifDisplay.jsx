@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useFavoritesContext } from "../context/FavoritesContext";
 
 const GifDisplay = ({ gif_id, title, url, addFavorite, removeFavorite, isFavorite }) => {
     return (

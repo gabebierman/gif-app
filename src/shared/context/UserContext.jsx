@@ -1,5 +1,10 @@
 import { useContext, createContext, useReducer, useCallback } from "react";
-import { CLEAR_USER, SET_USER, userReducer } from "../reducers/userReducer";
+import {
+    CLEAR_USER,
+    INTITAL_USER_STATE,
+    SET_USER,
+    userReducer,
+} from "../reducers/userReducer";
 
 const UserContext = createContext(null);
 export const useUserContext = () => useContext(UserContext);
