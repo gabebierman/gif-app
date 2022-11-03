@@ -7,9 +7,9 @@ export async function addFavorite(gif) {
             [gif.user_id, gif.gif_id]
         );
         if (gif_check) return { error: "already favorite", success: false };
-        const { insertID } = await query("INSER INTO favorite SET ? ", gif);
-        return { data: { ...gi, insertID }, success: true };
-    } catch (error) {
+        const { insertID } = await query("INSERT INTO favorite SET ? ", gif);
+        return { data: { ...gif, insertID }, success: true };
+    } catch (err) {
         console.error(err);
         return { error: "Something went wrong 🤷‍♂️", success: false };
     }
@@ -17,12 +17,12 @@ export async function addFavorite(gif) {
 
 export async function removeFavorite(user_id, gif_id) {
     try {
-        await query(
-            "DELETE FROM favorite WHERE favorite.user_id = ? AND favorite.gif_id = ?",
-            [user_id, gif_id]
-        );
-        return { data: "Successfully removed", success: true };
-    } catch (error) {
+        await query("DELETE FROM favorite WHERE user_id = ? AND gif_id = ?", [
+            user_id,
+            gif_id,
+        ]);
+        return { data: "successfully removed", success: true };
+    } catch (err) {
         console.error(err);
         return { error: "Something went wrong 🤷‍♂️", success: false };
     }
