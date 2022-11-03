@@ -4,6 +4,7 @@ import {
     CLEAR_FAVORITES,
     INITIAL_FAVORITES_STATE,
     REMOVE_FAVORITE,
+    SET_FAVORITES,
     favoritesReducer,
 } from "../reducers/favoritesReducer";
 
@@ -15,6 +16,13 @@ export const useFavoritesContext = () => {
 
 export function FavoritesProvider(props) {
     const [favorite, dispatch] = useReducer(favoritesReducer, INITIAL_FAVORITES_STATE);
+
+    const setFavorites = useCallback(
+        (favorites) => {
+            dispatch({ type: SET_FAVORITES, payload: favorites });
+        },
+        [dispatch]
+    );
 
     const addFavorite = useCallback(
         (gif) => {
@@ -36,7 +44,7 @@ export function FavoritesProvider(props) {
 
     return (
         <FavoritesContext.Provider
-            value={{ favorite, addFavorite, removeFavorite, clearFavorites }}
+            value={{ favorite, addFavorite, removeFavorite, clearFavorites, setFavorites }}
         >
             {props.children}
         </FavoritesContext.Provider>

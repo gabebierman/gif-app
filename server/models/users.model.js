@@ -1,6 +1,7 @@
 import query from "../config/database.config";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
+import { getByUser } from "./favorites.model";
 
 export async function register(username, password) {
     try {
@@ -30,7 +31,16 @@ export async function login(username, password) {
         }
         const match = bcrypt.compare(password, user.password);
         if (!match) return { error: "Invalid username or Password", success: false };
-        return { data: { id: user.id, username: user.username }, success: true };
+        //get by userID and if not an error , send back
+        const { data, error } = await getByUser(user.id);
+        if (error) {
+            console.error(err);
+            return { error: "Something went wrong 🤷‍♂️", success: false };
+        }
+        return {
+            data: { user: { id: user.id, username: user.username }, favorites: data },
+            success: true,
+        };
     } catch (err) {
         console.error(err);
         return { error: "Something went wrong 🤷‍♂️", success: false };
