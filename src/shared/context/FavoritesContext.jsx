@@ -15,6 +15,11 @@ export const useFavoritesContext = () => {
 };
 
 export function FavoritesProvider(props) {
+    // pull in the current users ID from UserContext
+    // buil mutations and pull out the mutat funciton
+    // call the mutate function addFavorite or removeFavorite
+    //on error log the error to the console
+    // on success dispatch the appropriate funciton
     const [favorite, dispatch] = useReducer(favoritesReducer, INITIAL_FAVORITES_STATE);
 
     const setFavorites = useCallback(
