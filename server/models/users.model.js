@@ -7,13 +7,13 @@ export async function register(username, password) {
         if (user) {
             return { error: "Username is already in use", success: false };
         }
-        let hash = await bcrypt.hash(password, saltRounds);
+        let hash = await bcrypt.hash(password, 10);
         await query("INSERT INTO user (username , password) VALUES ( ? , ?)", [
             username,
             hash,
         ]);
         return { data: "succesfully registered", success: true };
-    } catch (error) {
+    } catch (err) {
         console.error(err);
         return { error: "Something went wrong 🤷‍♂️", success: false };
     }
@@ -28,7 +28,7 @@ export async function login(username, password) {
         const match = bcrypt.compare(password, user.password);
         if (!match) return { error: "Invalid username or Password", success: false };
         return { data: { id: user.id, username: user.username }, success: true };
-    } catch (error) {
+    } catch (err) {
         console.error(err);
         return { error: "Something went wrong 🤷‍♂️", success: false };
     }
