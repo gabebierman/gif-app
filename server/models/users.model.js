@@ -1,5 +1,6 @@
 import query from "../config/database.config";
 import bcrypt from "bcryptjs";
+import { v4 as uuidv4 } from "uuid";
 
 export async function register(username, password) {
     try {
@@ -8,9 +9,11 @@ export async function register(username, password) {
             return { error: "Username is already in use", success: false };
         }
         let hash = await bcrypt.hash(password, 10);
-        await query("INSERT INTO user (username , password) VALUES ( ? , ?)", [
+        const uuid = uuidv4();
+        await query("INSERT INTO user (username , password , uuid) VALUES ( ? , ? , ?)", [
             username,
             hash,
+            uuid,
         ]);
         return { data: "succesfully registered", success: true };
     } catch (err) {

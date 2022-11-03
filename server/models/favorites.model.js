@@ -30,9 +30,10 @@ export async function removeFavorite(user_id, gif_id) {
 
 export async function getByUser(user_id) {
     try {
-        const gifs = await query("SELECT * FROM favorite WHERE favorite.user_id = ?", [
-            user_id,
-        ]);
+        const gifs = await query(
+            "SELECT gif_id , title , url FROM favorite WHERE favorite.user_id = ?",
+            [user_id]
+        );
         return { data: gifs, success: true };
     } catch (error) {
         console.error(err);
