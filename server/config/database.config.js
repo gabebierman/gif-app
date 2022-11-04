@@ -1,20 +1,34 @@
-import { Pool } from "pg";
-const pool = new Pool();
-
-//!only works if you have all of the following env variable
-//PGUSER= \
-//PGHOST= \
-//PGPASSWORD= \
-//PGDATABASE= \
-//PGPORT= \
-//node
-
-pool.connect((err, connection, release) => {
-    if (err) {
-        return console.error("Something went wrong connecting to the client 🤷‍♂️", err.stack);
+//-------------------- In Mongoose Config File ------------------//
+export default function mongooseConf(mongoose) {
+    function gracefulExit() {
+        mongoose.connection.close(() => {
+            console.log(`Mongoose connection has disconnected through app termination`);
+            process.exit(0);
+        });
     }
-    if (connection) release();
-    return;
-});
 
-export default pool.query;
+    mongoose.connection.on("connected", (ref) => {
+        console.log(`Successfully connected to ${process.env.NODE_ENV} database on startup `);
+    });
+
+    // If the connection throws an error
+    mongoose.connection.on("error", (err) => {
+        console.error(
+            `Failed to connect to ${process.env.NODE_ENV} database on startup `,
+            err
+        );
+    });
+
+    // When the connection is disconnected
+    mongoose.connection.on("disconnected", () => {
+        console.log(
+            `Mongoose default connection to ${process.env.NODE_ENV} database disconnected`
+        );
+    });
+
+    // If the Node process ends, close the Mongoose connection
+    process.on("SIGINT", gracefulExit).on("SIGTERM", gracefulExit);
+    mongoose.connect(process.env.MONGO_URI, (error) => {
+        if (error) throw error;
+    });
+}
