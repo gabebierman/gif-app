@@ -5,13 +5,13 @@ import { getByUser } from "./favorites.model";
 
 export async function register(username, password) {
     try {
-        const [user] = await query("SELECT * FROM user WHERE user.username = ?", [username]);
+        const [user] = await query("SELECT * FROM user WHERE user.username = $1", [username]);
         if (user) {
             return { error: "Username is already in use", success: false };
         }
         let hash = await bcrypt.hash(password, 10);
         const uuid = uuidv4();
-        await query("INSERT INTO user (username , password , uuid) VALUES ( ? , ? , ?)", [
+        await query("INSERT INTO user (username , password , uuid) VALUES ( $1 , $2 , $3)", [
             username,
             hash,
             uuid,
@@ -25,7 +25,7 @@ export async function register(username, password) {
 
 export async function login(username, password) {
     try {
-        const [user] = await query("SELECT * FROM user WHERE user.username = ?", [username]);
+        const [user] = await query("SELECT * FROM user WHERE user.username = $1", [username]);
         if (!user) {
             return { error: "invalid Username or password", success: false };
         }

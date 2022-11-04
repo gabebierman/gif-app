@@ -1,30 +1,20 @@
-import mysql from "mysql";
-import util from "util";
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_SCHEMA,
-    port: process.env.DB_PORT,
-});
+import { Pool } from "pg";
+const pool = new Pool();
 
-pool.getConnection((err, connection) => {
+//!only works if you have all of the following env variable
+//PGUSER= \
+//PGHOST= \
+//PGPASSWORD= \
+//PGDATABASE= \
+//PGPORT= \
+//node
+
+pool.connect((err, connection, release) => {
     if (err) {
-        console.error("Error connecting to the database");
-        if (err.code === "PROTOCOL_CONNECTION_LOST") {
-            console.error("Database connection was closed");
-        }
-        if (err.code === "ER_CON_COUNT_ERROR") {
-            console.error("Database has too many connections");
-        }
-        if (err.code === "ECONNREFUSED") {
-            console.error("Database connection was refused");
-        }
+        return console.error("Something went wrong connecting to the client 🤷‍♂️", err.stack);
     }
-    if (connection) connection.release();
+    if (connection) release();
     return;
 });
 
-const query = util.promisify(pool.query).bind(pool);
-
-export default query;
+export default pool.query;
