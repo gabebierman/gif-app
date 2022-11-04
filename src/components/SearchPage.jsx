@@ -10,7 +10,7 @@ const SearchPage = () => {
     const [rating, setRating] = useState("g");
     const [url, setUrl] = useState(null);
     const { searchResults, setSearchResults } = useSearchContext();
-    const { favorite, addFavorite, removeFavorite } = useFavoritesContext();
+    const { favorites, addFavorite, removeFavorite } = useFavoritesContext();
     const { error } = useQuery(["getGifs", url], () => getGifs(url), {
         onSuccess: (data) => setSearchResults(data),
         enabled: !!url,
@@ -45,7 +45,7 @@ const SearchPage = () => {
                     <GifDisplay
                         key={e.gif_id}
                         {...e}
-                        isFavorite={favorite.some((fave) => fave.gif_id === e.gif_id)}
+                        isFavorite={favorites.some((fave) => fave.gif_id === e.gif_id)}
                         addFavorite={addFavorite}
                         removeFavorite={removeFavorite}
                     />

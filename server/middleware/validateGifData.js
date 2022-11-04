@@ -11,18 +11,14 @@
 export default function validateGifData(req, res, next) {
     const urlRegex =
         /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)(.gif)/;
-    const { user_id, url, title, gif_id } = req.body;
-    if (!user_id) {
-        return res.send({ error: "not valid user id", success: false });
+
+    const { url, title, gif_id, user_id } = req.body;
+    if (!url || !url.toString().match(urlRegex) || url.length > 128) {
+        return res.send({ success: false, error: "Invalid Gif URL" });
     }
-    if (!url || !url.toString().match(urlRegex) || url.length > 64) {
-        return res.send({ error: "not valid url", success: false });
-    }
-    if (!title || title.length > 64) {
-        return res.send({ error: "not valid title", success: false });
-    }
-    if (!gif_id || gif_id.length > 32) {
-        return res.send({ error: "not valid gif id", success: false });
+
+    if (!title || !gif_id || !user_id || gif_id.length > 32 || title.length > 64) {
+        return res.send({ success: false, error: "Invalid Data Provided" });
     }
     req.body = { url, title, gif_id, user_id };
     return next();

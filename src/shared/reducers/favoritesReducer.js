@@ -9,13 +9,17 @@ export function favoritesReducer(state, action) {
     switch (action.type) {
         case ADD_FAVORITE:
             return [...state, action.payload];
+
         case REMOVE_FAVORITE:
             return state.filter((val) => val.gif_id !== action.payload);
+
         case SET_FAVORITES:
             return action.payload;
+
         case CLEAR_FAVORITES:
-            return INITIAL_FAVORITES_STATE;
+            return [];
+
         default:
-            return state;
+            throw new Error("Invalid action");
     }
 }

@@ -1,21 +1,21 @@
-import { useContext, createContext, useReducer, useCallback } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import React, { useReducer, useContext, createContext, useCallback } from "react";
 import {
     ADD_FAVORITE,
     CLEAR_FAVORITES,
+    favoritesReducer,
     INITIAL_FAVORITES_STATE,
     REMOVE_FAVORITE,
     SET_FAVORITES,
-    favoritesReducer,
 } from "../reducers/favoritesReducer";
 import { useUserContext } from "./UserContext";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 
 const FavoritesContext = createContext(null);
 
-export const useFavoritesContext = () => {
+export function useFavoritesContext() {
     return useContext(FavoritesContext);
-};
+}
 
 export function FavoritesProvider(props) {
     const { user } = useUserContext();
@@ -82,7 +82,13 @@ export function FavoritesProvider(props) {
 
     return (
         <FavoritesContext.Provider
-            value={{ favorite, addFavorite, removeFavorite, clearFavorites, setFavorites }}
+            value={{
+                favorites,
+                addFavorite,
+                removeFavorite,
+                clearFavorites,
+                setFavorites,
+            }}
         >
             {props.children}
         </FavoritesContext.Provider>
