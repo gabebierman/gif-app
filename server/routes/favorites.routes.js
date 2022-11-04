@@ -1,22 +1,51 @@
 import express from "express";
 import validateGifData from "../middleware/validateGifData";
-import { addFavorite, getByUser, removeFavorite } from "../models/favorites.model";
+import User from "../models/users.model";
 const router = express.Router();
 
 router.put("/add", validateGifData, async (req, res) => {
-    const resObj = await addFavorite(req.body);
-    return res.send(resObj);
+    const { user_id, ...gif } = req.params;
+    try {
+        const user = await User.findOne({ _id: user_id }).exec();
+        if (!user) return res.send({ succeess: false, data: "invalid user id" });
+
+        user.favorites.push(gif);
+        await user.save();
+        return res.send({ success: true, data: "sucessfully added" });
+    } catch (err) {
+        return res.send({ eror: "something went wrong 🤷‍♂️", success: false });
+    }
 });
 
 router.delete("/delete/:gif_id/:user_id", async (req, res) => {
-    const { gif_id, user_id } = req.params;
-    const resObj = await removeFavorite(user_id, gif_id);
-    return res.send(resObj);
+    const { user_id, gif_id } = req.params;
+    try {
+        const user = await User.findOne({ _id: user_id }).exec();
+
+        if (!user) return res.send({ success: false, data: "invalid user id" });
+
+        const toRemove = user.favorites.find((gif) => gif.gif_id === gif_id);
+
+        await toRemove.remove();
+
+        await user.save();
+
+        return res.send({ success: true, data: "sucessfully removed" });
+    } catch (err) {
+        return res.send({ eror: "something went wrong 🤷‍♂️", success: false });
+    }
 });
 
 router.get("/:user_id", async (req, res) => {
-    const resObj = await getByUser(req.params.user_id);
-    return res.send(resObj);
+    try {
+        const user = await User.findOne({ _id: req.params.user_id }).exec();
+
+        if (!user) return res.send({ success: true, data: [] });
+
+        return res.send({ success: true, data: user.favorites });
+    } catch (err) {
+        return res.send({ eror: "something went wrong 🤷‍♂️", success: false });
+    }
 });
 
 export default router;

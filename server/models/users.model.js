@@ -12,7 +12,7 @@ const userSchema = new Schema({
         unique: [true, "Username already taken"],
     },
     password: { type: String, minLength: 8, maxLength: 20, required: true },
-    faorites: [favoriteSchema],
+    favorites: { type: [favoriteSchema], default: [] },
     uuid: { type: String, default: () => uuidv4() },
 });
 
@@ -29,6 +29,14 @@ userSchema.methods.hash = async function (password) {
 
 userSchema.methods.verify = async function (password) {
     return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.sanatize = function () {
+    return {
+        username: this.username,
+        favorities: this.favorites,
+        id: this._id,
+    };
 };
 
 export default model("User", userSchema);
