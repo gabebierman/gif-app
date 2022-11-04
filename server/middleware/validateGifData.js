@@ -13,7 +13,7 @@ export default function validateGifData(req, res, next) {
         /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)(.gif)/;
 
     const { url, title, gif_id, user_id } = req.body;
-    if (!url || !url.toString().match(urlRegex) || url.length > 128) {
+    if (!url || !url.toString().match(urlRegex) || url.length > 164) {
         return res.send({ success: false, error: "Invalid Gif URL" });
     }
 
