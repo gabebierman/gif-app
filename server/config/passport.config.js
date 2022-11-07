@@ -1,4 +1,3 @@
-//TODO set up passport configuration
 import { Strategy } from "passport-jwt";
 import passport from "passport";
 
