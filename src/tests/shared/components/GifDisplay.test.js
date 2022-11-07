@@ -30,8 +30,6 @@ const customRender = (isFavortie, renderOptions = {}) => {
     );
 };
 
-// TODO - Write tests
-
 describe("GifDisplay", () => {
     describe("Rendering", () => {
         it("should render Gif Display", () => {

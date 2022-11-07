@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.static(__dirname + "/build"));
 app.use(express.json());
+//TODO implement cookies and passport
 app.use("/api/users", userRoutes);
 app.use("/api/favorites", favoritesRoutes);
 app.get("*", (req, res) => {

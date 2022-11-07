@@ -23,6 +23,7 @@ export async function register(username, password) {
     }
 }
 
+//TODO: send back a signed JWT
 export async function login(username, password) {
     try {
         const [user] = await query("SELECT * FROM user WHERE user.username = ?", [username]);

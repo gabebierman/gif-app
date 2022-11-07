@@ -15,4 +15,6 @@ router.post("/login", async (req, res) => {
     return res.send(resObj);
 });
 
+//TODO add a logout route to delete the cookie
+
 export default router;
