@@ -29,4 +29,13 @@ router.get("/logout", (res) => {
     return res.send({ success: true, data: "successfully logged out" });
 });
 
+router.get("/verify", async (req, res) => {
+    const resObj = await getByUser(req.user.id);
+    if (!resObj.success) return res.send(resObj);
+    return res.send({
+        success: true,
+        data: { user: { username: req.user.username }, favorites: resObj.data },
+    });
+});
+
 export default router;
