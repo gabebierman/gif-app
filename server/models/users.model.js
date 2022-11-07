@@ -23,7 +23,6 @@ export async function register(username, password) {
     }
 }
 
-//TODO: send back a signed JWT
 export async function login(username, password) {
     try {
         const [user] = await query("SELECT * FROM user WHERE user.username = ?", [username]);
@@ -39,8 +38,9 @@ export async function login(username, password) {
             return { error: "Something went wrong 🤷‍♂️", success: false };
         }
         return {
-            data: { user: { id: user.id, username: user.username }, favorites: data },
+            data: { user: { username: user.username }, favorites: data },
             success: true,
+            id: user.id,
         };
     } catch (err) {
         console.error(err);

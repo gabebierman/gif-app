@@ -20,13 +20,9 @@ export function useFavoritesContext() {
 export function FavoritesProvider(props) {
     const { user } = useUserContext();
 
-    //TODO change data being sent
     const { mutate: addFavorite } = useMutation({
         mutationFn: async (gif) => {
-            const { data } = await axios.put("/api/favorites/add", {
-                ...gif,
-                user_id: user?.id,
-            });
+            const { data } = await axios.put("/api/favorites/add", { gif });
             return data;
         },
         onSuccess: (res) => {
@@ -38,10 +34,9 @@ export function FavoritesProvider(props) {
         },
         onError: (err) => console.error(err),
     });
-    //TODO change the route the requst is sent to
     const { mutate: removeFavorite } = useMutation({
         mutationFn: async (gif_id) => {
-            const { data } = await axios.delete(`/api/favorites/delete/${gif_id}/${user?.id}`);
+            const { data } = await axios.delete(`/api/favorites/delete/${gif_id}`);
             return data;
         },
         onSuccess: (res) => {
