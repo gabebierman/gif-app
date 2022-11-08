@@ -9,7 +9,7 @@ import {
     REMOVE_FAVORITE,
     SET_FAVORITES,
 } from "../reducers/favoritesReducer";
-import { useUserContext } from "./UserContext";
+// import { useUserContext } from "./UserContext";
 
 const FavoritesContext = createContext(null);
 
@@ -18,11 +18,12 @@ export function useFavoritesContext() {
 }
 
 export function FavoritesProvider(props) {
-    const { user } = useUserContext();
+    // const { user } = useUserContext();
 
     const { mutate: addFavorite } = useMutation({
         mutationFn: async (gif) => {
-            const { data } = await axios.put("/api/favorites/add", { gif });
+            const { data } = await axios.put("/api/favorites/add", gif);
+            console.log(data);
             return data;
         },
         onSuccess: (res) => {
@@ -34,6 +35,7 @@ export function FavoritesProvider(props) {
         },
         onError: (err) => console.error(err),
     });
+
     const { mutate: removeFavorite } = useMutation({
         mutationFn: async (gif_id) => {
             const { data } = await axios.delete(`/api/favorites/delete/${gif_id}`);

@@ -1,8 +1,9 @@
 import { Strategy } from "passport-jwt";
 import passport from "passport";
+import query from "./database.config";
 
 const cookieExtractor = (req) => {
-    const token = null;
+    let token = null;
     if (req && req.cookies) {
         token = req.cookies["auth"];
     }
@@ -23,6 +24,7 @@ passport.use(
                 [user_id]
             );
             if (!user) return done(null, false, "No user found");
+
             return done(null, user);
         } catch (err) {
             return done(err, false, "Something went wrong , could not authenticate 🤷‍♂️");

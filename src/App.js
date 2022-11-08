@@ -6,8 +6,30 @@ import {
     LoginPageWithAuth,
     SearchPageWithAuth,
 } from "./shared/components/ProtectedRoute";
+import { useState } from "react";
+import { useUserContext } from "./shared/context/UserContext";
+import { useFavoritesContext } from "./shared/context/FavoritesContext";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 function App() {
+    const { setUser } = useUserContext;
+    const { setFavorites } = useFavoritesContext;
+    const [isFetched, setIsFetched] = useState(false);
+    useQuery(["userInfo"], () => axios.get("/api/users/verify"), {
+        enabled: !isFetched,
+        retry: 0,
+        staleTime: Infinity,
+        refetchOnMount: false,
+        onSettled: ({ data: res }) => {
+            setIsFetched(true);
+            if (res?.data?.success) {
+                setUser(res.data.data.user);
+                setFavorites(res.data.data.favorites);
+            }
+        },
+    });
+    if (!isFetched) return <></>;
     return (
         <Router>
             <Menu />
