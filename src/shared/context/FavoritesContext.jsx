@@ -23,7 +23,6 @@ export function FavoritesProvider(props) {
     const { mutate: addFavorite } = useMutation({
         mutationFn: async (gif) => {
             const { data } = await axios.put("/api/favorites/add", gif);
-            console.log(data);
             return data;
         },
         onSuccess: (res) => {
