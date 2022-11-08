@@ -16,13 +16,10 @@ router.post("/login", validateData, async (req, res) => {
     const { username, password } = req.body;
     const resObj = await login(username, password);
     if (!resObj.success) return res.send(resObj);
-    //sign a jwt with an object {user_id: resObj.id}
     const token = jwt.sign({ user_id: resObj.id }, process.env.SECRET_KEY, {
         expiresIn: "7d",
     });
-    //attach it to a cookie on the response
     res.cookie("auth", token, { httpOnly: true });
-    //send the response
     return res.send({ success: true, data: resObj.data });
 });
 

@@ -44,15 +44,21 @@ const LoginPage = () => {
             <button
                 disabled={username.length < 3 || password.length < 7}
                 onClick={() => {
-                    if (username.length > 1 && password.length > 1) {
+                    {
                         login({ username, password });
                     }
                 }}
             >
                 Login
             </button>
-            {resObject && resObject.error}
-            {reqError && <>Something went wrong , please try again later</>}
+            {resObject && resObject.error && (
+                <div style={{ textAlign: "center" }}>{resObject?.error}</div>
+            )}
+            {reqError && (
+                <div style={{ textAlign: "center" }}>
+                    Something went wrong, please try again later
+                </div>
+            )}
         </>
     );
 };

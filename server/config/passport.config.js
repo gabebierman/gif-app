@@ -18,7 +18,6 @@ const jwtOptions = {
 passport.use(
     new Strategy(jwtOptions, async (payload, done) => {
         const { user_id } = payload;
-        console.log(user_id);
         try {
             const [user] = await query(
                 "SELECT username , uuid , id FROM user WHERE user.id = ?",
