@@ -8,6 +8,7 @@ import { Input } from "../shared/styled/Input";
 import { Button } from "../shared/styled/Button";
 import { FlexContainer } from "../shared/styled/FlexContainer";
 import { Form } from "react-router-dom";
+import { Nav } from "../shared/styled/Nav";
 
 const SearchPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -21,28 +22,29 @@ const SearchPage = () => {
     });
     return (
         <>
-            <Input
-                placeholder="Search Term"
-                id="search-term"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <select value={rating} onChange={(e) => setRating(e.target.value)}>
-                <option value="g">G</option>
-                <option value="pg">PG</option>
-                <option value="pg-13">PG-13</option>
-                <option value="r">R</option>
-            </select>
-            <Button
-                onClick={(e) => {
-                    if (searchTerm) {
-                        setUrl(`&q=${searchTerm}&rating=${rating}`);
-                    }
-                }}
-            >
-                Search
-            </Button>
-
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <Input
+                    placeholder="Search Term"
+                    id="search-term"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <select value={rating} onChange={(e) => setRating(e.target.value)}>
+                    <option value="g">G</option>
+                    <option value="pg">PG</option>
+                    <option value="pg-13">PG-13</option>
+                    <option value="r">R</option>
+                </select>
+                <Button
+                    onClick={(e) => {
+                        if (searchTerm) {
+                            setUrl(`&q=${searchTerm}&rating=${rating}`);
+                        }
+                    }}
+                >
+                    Search
+                </Button>
+            </div>
             {error && "Uh oh"}
             {searchResults.length === 0}
             {searchResults.length !== 0 &&
