@@ -6,6 +6,8 @@ import GifDisplay from "../shared/components/GifDisplay";
 import { useFavoritesContext } from "../shared/context/FavoritesContext";
 import { Input } from "../shared/styled/Input";
 import { Button } from "../shared/styled/Button";
+import { FlexContainer } from "../shared/styled/FlexContainer";
+import { Form } from "react-router-dom";
 
 const SearchPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +20,7 @@ const SearchPage = () => {
         enabled: !!url,
     });
     return (
-        <div>
+        <>
             <Input
                 placeholder="Search Term"
                 id="search-term"
@@ -40,19 +42,22 @@ const SearchPage = () => {
             >
                 Search
             </Button>
+
             {error && "Uh oh"}
-            {searchResults.length === 0 && "Dave's not here , man"}
+            {searchResults.length === 0}
             {searchResults.length !== 0 &&
                 searchResults.map((e) => (
-                    <GifDisplay
-                        key={e.gif_id}
-                        {...e}
-                        isFavorite={favorites.some((fave) => fave.gif_id === e.gif_id)}
-                        addFavorite={addFavorite}
-                        removeFavorite={removeFavorite}
-                    />
+                    <FlexContainer>
+                        <GifDisplay
+                            key={e.gif_id}
+                            {...e}
+                            isFavorite={favorites.some((fave) => fave.gif_id === e.gif_id)}
+                            addFavorite={addFavorite}
+                            removeFavorite={removeFavorite}
+                        />
+                    </FlexContainer>
                 ))}
-        </div>
+        </>
     );
 };
 

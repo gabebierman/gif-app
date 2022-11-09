@@ -6,6 +6,7 @@ import { useFavoritesContext } from "../shared/context/FavoritesContext";
 import { Label } from "../shared/styled/Label";
 import { Input } from "../shared/styled/Input";
 import { Button } from "../shared/styled/Button";
+import { FlexContainer } from "../shared/styled/FlexContainer";
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
@@ -30,7 +31,7 @@ const LoginPage = () => {
         },
     });
     return (
-        <>
+        <FlexContainer>
             <Label htmlFor="username">Username</Label>
             <Input
                 id="username"
@@ -62,7 +63,7 @@ const LoginPage = () => {
                     Something went wrong, please try again later
                 </div>
             )}
-        </>
+        </FlexContainer>
     );
 };
 

@@ -1,11 +1,12 @@
 import React from "react";
 import { Button } from "../styled/Button";
+import { FlexContainer } from "../styled/FlexContainer";
 import { Img } from "../styled/Image";
 
 const GifDisplay = ({ gif_id, title, url, addFavorite, removeFavorite, isFavorite }) => {
     return (
         <>
-            <div key={gif_id}>
+            <FlexContainer key={gif_id}>
                 <h3>{title}</h3>
                 <Img src={url} alt={title}></Img>
                 {isFavorite && (
@@ -16,7 +17,7 @@ const GifDisplay = ({ gif_id, title, url, addFavorite, removeFavorite, isFavorit
                         Add Favorite
                     </Button>
                 )}
-            </div>
+            </FlexContainer>
         </>
     );
 };

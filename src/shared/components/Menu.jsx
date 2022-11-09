@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useFavoritesContext } from "../context/FavoritesContext";
 import { useSearchContext } from "../context/SearchContext";
 import { useUserContext } from "../context/UserContext";
 import { useState } from "react";
 import axios from "axios";
+import { Nav } from "../styled/Nav";
 
 const Menu = () => {
     const { user, clearUser } = useUserContext();
@@ -23,21 +24,21 @@ const Menu = () => {
         onError: () => console.log("Error logging out"),
     });
     return (
-        <nav>
+        <Nav>
             {!user && (
-                <NavLink className="link" to="/login">
+                <Link className="link" to="/login">
                     Login
-                </NavLink>
+                </Link>
             )}
             {user && (
                 <>
-                    <NavLink className="link" to="/search">
+                    <Link className="link" to="/search">
                         Search
-                    </NavLink>
-                    <NavLink className="link" to="/favorites">
+                    </Link>
+                    <Link className="link" to="/favorites">
                         Favorites
-                    </NavLink>
-                    <NavLink
+                    </Link>
+                    <Link
                         className="link"
                         to="/login"
                         onClick={() => {
@@ -48,10 +49,10 @@ const Menu = () => {
                         }}
                     >
                         Logout
-                    </NavLink>
+                    </Link>
                 </>
             )}
-        </nav>
+        </Nav>
     );
 };
 
