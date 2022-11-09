@@ -3,6 +3,9 @@ import { useUserContext } from "../shared/context/UserContext";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useFavoritesContext } from "../shared/context/FavoritesContext";
+import { Label } from "../shared/styled/Label";
+import { Input } from "../shared/styled/Input";
+import { Button } from "../shared/styled/Button";
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
@@ -28,20 +31,20 @@ const LoginPage = () => {
     });
     return (
         <>
-            <label htmlFor="username">Username</label>
-            <input
+            <Label htmlFor="username">Username</Label>
+            <Input
                 id="username"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
-            ></input>
-            <label htmlFor="password">Password</label>
-            <input
+            ></Input>
+            <Label htmlFor="password">Password</Label>
+            <Input
                 id="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 type="password"
-            ></input>
-            <button
+            ></Input>
+            <Button
                 disabled={username.length < 3 || password.length < 7}
                 onClick={() => {
                     {
@@ -50,7 +53,7 @@ const LoginPage = () => {
                 }}
             >
                 Login
-            </button>
+            </Button>
             {resObject && resObject.error && (
                 <div style={{ textAlign: "center" }}>{resObject?.error}</div>
             )}

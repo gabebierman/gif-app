@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider, FavoritesProvider, SearchProvider } from "./shared/context/index";
+import { ThemeProvider } from "./shared/themes/ThemeProvider";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -17,15 +18,17 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <UserProvider>
-                <FavoritesProvider>
-                    <SearchProvider>
-                        <App />
-                    </SearchProvider>
-                </FavoritesProvider>
-            </UserProvider>
-        </QueryClientProvider>
+        <ThemeProvider>
+            <QueryClientProvider client={queryClient}>
+                <UserProvider>
+                    <FavoritesProvider>
+                        <SearchProvider>
+                            <App />
+                        </SearchProvider>
+                    </FavoritesProvider>
+                </UserProvider>
+            </QueryClientProvider>
+        </ThemeProvider>
     </React.StrictMode>
 );
 

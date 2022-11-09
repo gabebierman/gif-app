@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchContext } from "../shared/context/SearchContext";
 import GifDisplay from "../shared/components/GifDisplay";
 import { useFavoritesContext } from "../shared/context/FavoritesContext";
+import { Input } from "../shared/styled/Input";
+import { Button } from "../shared/styled/Button";
 
 const SearchPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +19,7 @@ const SearchPage = () => {
     });
     return (
         <div>
-            <input
+            <Input
                 placeholder="Search Term"
                 id="search-term"
                 value={searchTerm}
@@ -29,7 +31,7 @@ const SearchPage = () => {
                 <option value="pg-13">PG-13</option>
                 <option value="r">R</option>
             </select>
-            <button
+            <Button
                 onClick={(e) => {
                     if (searchTerm) {
                         setUrl(`&q=${searchTerm}&rating=${rating}`);
@@ -37,7 +39,7 @@ const SearchPage = () => {
                 }}
             >
                 Search
-            </button>
+            </Button>
             {error && "Uh oh"}
             {searchResults.length === 0 && "Dave's not here , man"}
             {searchResults.length !== 0 &&
